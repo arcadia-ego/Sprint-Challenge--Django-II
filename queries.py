@@ -1,14 +1,14 @@
 #How many total Characters are there?
-    A:  entries = Character.objects.all()
-        len(entries)
+entries = Character.objects.all()
+len(entries)
 
 #How many of each subclass?
-    A: from charactercreator.models import cleric #etc, all subclasses
+     from charactercreator.models import cleric #etc, all subclasses
         clerics = Cleric.objects.all()
         len(clerics) #useable for any subclass
 
 #How many total items?
-    A: from armory.models import *
+     from armory.models import *
         items = Item.objects.all()
         len(items)
 
@@ -30,4 +30,7 @@
 
 #On average, how many Weapons does each character have?
     # I believe the data may need to be modified to make this query. The ManyToMany field in the items seems to limit characters to only have Item class weapons, not Weapon class.
-        
+    
+
+    #after Brian's talk
+    Character.objects.all().annotate(count=models.Count('inventory__weapon')).aggregate(models.Avg('count'))
